@@ -1,0 +1,35 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# Maven
+target/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+
+# Environment
+.env
+
+# Docker
+docker-data/
+
+# Mac
+.AppleDouble
+.LSOverride
