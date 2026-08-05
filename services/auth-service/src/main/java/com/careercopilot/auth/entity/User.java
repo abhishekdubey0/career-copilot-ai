@@ -3,6 +3,7 @@ package com.careercopilot.auth.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -37,7 +38,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    private boolean emailVerified;
+    @Column(nullable = false)
+    private boolean emailVerified = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -46,4 +48,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }
