@@ -6,6 +6,8 @@ import com.careercopilot.auth.dto.response.AuthResponse;
 import com.careercopilot.auth.entity.Role;
 import com.careercopilot.auth.entity.User;
 import com.careercopilot.auth.entity.UserStatus;
+import com.careercopilot.auth.exception.EmailAlreadyExistsException;
+import com.careercopilot.auth.exception.ResourceNotFoundException;
 import com.careercopilot.auth.repository.RoleRepository;
 import com.careercopilot.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +29,11 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterRequest request) {
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         Role userRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("ROLE_USER not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("ROLE_USER not found"));
 
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -48,6 +50,9 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return new AuthResponse("User registered successfully");
+        return new AuthResponse(
+                user.getId(),
+                user.getEmail()
+        );
     }
 }
