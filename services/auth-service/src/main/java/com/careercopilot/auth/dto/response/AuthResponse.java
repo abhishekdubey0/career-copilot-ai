@@ -3,9 +3,13 @@ package com.careercopilot.auth.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 public class AuthResponse {
 
-    private String message;
+    private UUID userId;
+
+    private String email;
 }
