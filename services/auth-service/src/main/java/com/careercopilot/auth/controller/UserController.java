@@ -1,6 +1,7 @@
 package com.careercopilot.auth.controller;
 
 import com.careercopilot.auth.dto.response.UserProfileResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     @GetMapping("/me")

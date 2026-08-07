@@ -1,6 +1,7 @@
 package com.careercopilot.auth.config;
 
 import com.careercopilot.auth.security.CustomUserDetailsService;
+import com.careercopilot.auth.security.JwtAuthenticationEntryPoint;
 import com.careercopilot.auth.security.JwtAuthenticationFilter;
 import com.careercopilot.auth.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class SecurityConfig {
 
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
 
     @Bean
@@ -39,8 +41,16 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .exceptionHandling(exception ->
+                        exception.authenticationEntryPoint(authenticationEntryPoint)
+                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
