@@ -27,6 +27,12 @@ public class RefreshToken {
 
     private boolean revoked;
 
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

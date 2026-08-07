@@ -26,3 +26,8 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+
+jwt:
+  secret: 7d1d8c5dbe5a7eab7b59f8f5a45f9cb1d0c4f7f3c8a5b6d1e9f2c7a4d8b5e1c6
+  expiration: 3600000
+  refresh-expiration: 604800000

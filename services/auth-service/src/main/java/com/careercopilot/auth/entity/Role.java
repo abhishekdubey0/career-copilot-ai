@@ -2,6 +2,7 @@ package com.careercopilot.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,4 +21,9 @@ public class Role {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }
