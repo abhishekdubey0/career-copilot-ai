@@ -2,8 +2,11 @@ package com.careercopilot.auth.controller;
 
 import com.careercopilot.auth.common.ApiResponse;
 import com.careercopilot.auth.common.ResponseBuilder;
+import com.careercopilot.auth.dto.request.LoginRequest;
+import com.careercopilot.auth.dto.request.RefreshTokenRequest;
 import com.careercopilot.auth.dto.request.RegisterRequest;
 import com.careercopilot.auth.dto.response.AuthResponse;
+import com.careercopilot.auth.dto.response.LoginResponse;
 import com.careercopilot.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +35,50 @@ public class AuthController {
                                 response
                         )
                 );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        LoginResponse response = authService.login(request);
+
+        return ResponseEntity.ok(
+                ResponseBuilder.success(
+                        HttpStatus.OK,
+                        "Login successful",
+                        response
+                )
+        );
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<ApiResponse<LoginResponse>> refreshToken(
+            @Valid @RequestBody RefreshTokenRequest request) {
+
+        LoginResponse response = authService.refreshToken(request);
+
+        return ResponseEntity.ok(
+                ResponseBuilder.success(
+                        HttpStatus.OK,
+                        "Access token refreshed successfully",
+                        response
+                )
+        );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @RequestBody RefreshTokenRequest request) {
+
+        authService.logout(request.getRefreshToken());
+
+        return ResponseEntity.ok(
+                ResponseBuilder.success(
+                        HttpStatus.OK,
+                        "Logged out successfully",
+                        null
+                )
+        );
     }
 }
