@@ -1,12 +1,12 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
-    name: resume-service
+    name: resume-intelligence-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/resume_db
+    url: jdbc:postgresql://localhost:5432/intelligence_db
     username: postgres
     password: Abhi@1234
     driver-class-name: org.postgresql.Driver
@@ -23,7 +23,13 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
-resume:
-  upload:
-    directory: uploads/resumes
-    max-file-size: 5242880
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: qwen2.5:3b
+
+services:
+  resume:
+    base-url: http://localhost:8082

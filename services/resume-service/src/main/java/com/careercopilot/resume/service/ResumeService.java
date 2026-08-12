@@ -16,4 +16,6 @@ public interface ResumeService {
 
     void deleteResume(UUID resumeId);
 
+    String getResumeText(UUID resumeId);
+
 }
