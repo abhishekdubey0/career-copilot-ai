@@ -90,4 +90,19 @@ public class ResumeController {
                 )
         );
     }
+    @Operation(summary = "Get resume text")
+    @GetMapping("/{resumeId}/text")
+    public ResponseEntity<ApiResponse<String>> getResumeText(
+            @PathVariable UUID resumeId) {
+
+        String resumeText = resumeService.getResumeText(resumeId);
+
+        return ResponseEntity.ok(
+                ResponseBuilder.success(
+                        HttpStatus.OK,
+                        "Resume text fetched successfully",
+                        resumeText
+                )
+        );
+    }
 }

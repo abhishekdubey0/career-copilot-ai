@@ -153,4 +153,16 @@ public class ResumeServiceImpl implements ResumeService {
             throw new ResumeDeletionException("Failed to delete resume", ex);
         }
     }
+
+    @Override
+    public String getResumeText(UUID resumeId) {
+
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Resume not found with id: " + resumeId
+                        ));
+
+        return resume.getExtractedText();
+    }
 }
