@@ -1,6 +1,7 @@
 package com.careercopilot.intelligence.analyzer;
 
 import com.careercopilot.intelligence.dto.ai.ImprovedResume;
+import com.careercopilot.intelligence.exception.AiServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Component;
@@ -36,9 +37,16 @@ public class LatexGeneratorImpl implements LatexGenerator {
                 %s
                 """.formatted(resume);
 
-        return chatClient.prompt()
-                .user(prompt)
-                .call()
-                .content();
+        try {
+            return chatClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .content();
+        } catch (Exception e) {
+            throw new AiServiceException(
+                    "Unable to generate latex with AI service",
+                    e
+            );
+        }
     }
 }

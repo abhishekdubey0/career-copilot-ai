@@ -4,6 +4,8 @@ import com.careercopilot.intelligence.exception.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.messaging.handler.annotation.support.MethodArgumentTypeMismatchException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -55,6 +57,71 @@ public class GlobalExceptionHandler {
                 .body(buildError(
                         HttpStatus.NOT_FOUND,
                         ex.getMessage(),
+                        request
+                ));
+    }
+
+    @ExceptionHandler(GeneratedResumeNotFoundException.class)
+    public ResponseEntity<ApiError> handleGeneratedResumeNotFound(
+            GeneratedResumeNotFoundException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(buildError(
+                        HttpStatus.NOT_FOUND,
+                        ex.getMessage(),
+                        request
+                ));
+    }
+
+    @ExceptionHandler(ResumeServiceException.class)
+    public ResponseEntity<ApiError> handleResumeServiceException(
+            ResumeServiceException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(buildError(
+                        HttpStatus.SERVICE_UNAVAILABLE,
+                        ex.getMessage(),
+                        request
+                ));
+    }
+
+    @ExceptionHandler(AiServiceException.class)
+    public ResponseEntity<ApiError> handleAiServiceException(
+            AiServiceException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(buildError(
+                        HttpStatus.SERVICE_UNAVAILABLE,
+                        ex.getMessage(),
+                        request
+                ));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiError> handleTypeMismatch(
+            MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .badRequest()
+                .body(buildError(
+                        HttpStatus.BAD_REQUEST,
+                        "Invalid UUID format",
+                        request
+                ));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> handleInvalidJson(
+            HttpMessageNotReadableException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .badRequest()
+                .body(buildError(
+                        HttpStatus.BAD_REQUEST,
+                        "Invalid request body",
                         request
                 ));
     }
