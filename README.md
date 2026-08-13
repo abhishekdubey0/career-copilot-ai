@@ -1,8 +1,8 @@
-# Career Copilot
+# Career Copilot AI
 
 > AI-powered resume analysis and optimization platform built with Java, Spring Boot, PostgreSQL, Spring AI, Ollama, and a microservices architecture.
 
-Career Copilot helps candidates analyze their resumes against job descriptions, identify matching and missing requirements, calculate an ATS-oriented score, and generate an improved structured version of their resume.
+Career Copilot AI helps candidates analyze their resumes against job descriptions, identify matching and missing requirements, calculate an ATS-oriented score, and generate an improved structured version of their resume.
 
 The project is designed as an end-to-end backend engineering project demonstrating microservices, REST APIs, database design, AI/LLM integration, document processing, and structured resume generation.
 
@@ -38,7 +38,7 @@ The project is designed as an end-to-end backend engineering project demonstrati
 
 ### ATS Resume Analysis
 
-Career Copilot compares the resume against a job description and generates:
+Career Copilot AI compares the resume against a job description and generates:
 
 - ATS score
 - Matched requirements
@@ -124,7 +124,7 @@ The generated LaTeX can be copied into Overleaf for PDF compilation.
 
 # 🏗️ Architecture
 
-Career Copilot follows a microservices-oriented architecture.
+Career Copilot AI follows a microservices-oriented architecture.
 
 ```text
                          +----------------+
@@ -290,7 +290,7 @@ Responsible for AI-powered resume intelligence.
 # 📂 Project Structure
 
 ```text
-career-copilot/
+career-copilot-ai/
 │
 ├── auth-service/
 │
@@ -755,7 +755,7 @@ Install:
 ## 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone (https://github.com/abhishekdubey0/career-copilot-ai.git)
 cd career-copilot
 ```
 
@@ -1040,7 +1040,7 @@ API Tests
 
 # 🎯 End-to-End Use Case
 
-A typical Career Copilot workflow looks like:
+A typical Career Copilot AI workflow looks like:
 
 ```text
                     USER
@@ -1100,9 +1100,9 @@ A typical Career Copilot workflow looks like:
 
 ---
 
-# 💡 Why Career Copilot?
+# 💡 Why Career Copilot AI?
 
-Career Copilot is built to demonstrate more than basic CRUD operations.
+Career Copilot AI is built to demonstrate more than basic CRUD operations.
 
 The project combines:
 
@@ -1134,7 +1134,7 @@ It demonstrates how an AI capability can be integrated into a backend system whi
 
 **Abhishek Dubey**
 
-Computer Science Engineer | Java | Spring Boot | Backend Development | SDET
+Software Engineer | Java | Spring Boot | Backend Development | SDET
 
 ---
 
