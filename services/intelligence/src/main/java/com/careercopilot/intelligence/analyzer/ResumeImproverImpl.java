@@ -2,6 +2,7 @@ package com.careercopilot.intelligence.analyzer;
 
 import com.careercopilot.intelligence.analyzer.ResumeImprover;
 import com.careercopilot.intelligence.dto.ai.ImprovedResume;
+import com.careercopilot.intelligence.exception.AiServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Component;
@@ -62,10 +63,14 @@ public class ResumeImproverImpl implements ResumeImprover {
                 resumeText
         );
 
-        return chatClient.prompt()
-                .system(systemPrompt)
-                .user(userPrompt)
-                .call()
-                .entity(ImprovedResume.class);
+        try {
+            return chatClient.prompt()
+                    .system(systemPrompt)
+                    .user(userPrompt)
+                    .call()
+                    .entity(ImprovedResume.class);
+        } catch (Exception e) {
+            throw new AiServiceException("unable to improve resume with AI service", e);
+        }
     }
 }

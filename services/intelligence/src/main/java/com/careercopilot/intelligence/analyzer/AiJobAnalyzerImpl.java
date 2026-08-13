@@ -1,6 +1,7 @@
 package com.careercopilot.intelligence.analyzer;
 
 import com.careercopilot.intelligence.dto.analyzer.JobAnalysis;
+import com.careercopilot.intelligence.exception.AiServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Component;
@@ -48,10 +49,20 @@ public class AiJobAnalyzerImpl implements AiJobAnalyzer {
                 Return only structured data matching the requested schema.
                 """;
 
-        return chatClient.prompt()
-                .system(systemPrompt)
-                .user(jobDescription)
-                .call()
-                .entity(JobAnalysis.class);
+        try {
+
+            return chatClient.prompt()
+                    .system(systemPrompt)
+                    .user(jobDescription)
+                    .call()
+                    .entity(JobAnalysis.class);
+
+        } catch (Exception e) {
+
+            throw new AiServiceException(
+                    "Unable to process job description with AI service",
+                    e
+            );
+        }
     }
 }

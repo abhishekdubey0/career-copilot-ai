@@ -7,6 +7,8 @@ import com.careercopilot.intelligence.dto.ai.ImprovedResume;
 import com.careercopilot.intelligence.dto.response.GeneratedResumeResponse;
 import com.careercopilot.intelligence.entity.GeneratedResume;
 import com.careercopilot.intelligence.entity.ResumeAnalysis;
+import com.careercopilot.intelligence.exception.AnalysisNotFoundException;
+import com.careercopilot.intelligence.exception.GeneratedResumeNotFoundException;
 import com.careercopilot.intelligence.repository.GeneratedResumeRepository;
 import com.careercopilot.intelligence.repository.ResumeAnalysisRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +34,7 @@ public class GeneratedResumeServiceImpl implements GeneratedResumeService {
         ResumeAnalysis analysis =
                 resumeAnalysisRepository.findById(analysisId)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Resume analysis not found: " + analysisId
-                                )
+                                new AnalysisNotFoundException(analysisId)
                         );
 
         String resumeText =
@@ -79,10 +80,7 @@ public class GeneratedResumeServiceImpl implements GeneratedResumeService {
         GeneratedResume generatedResume =
                 generatedResumeRepository.findById(generatedResumeId)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Generated resume not found: "
-                                                + generatedResumeId
-                                )
+                                new GeneratedResumeNotFoundException(generatedResumeId)
                         );
 
         String latexCode =
@@ -105,13 +103,21 @@ public class GeneratedResumeServiceImpl implements GeneratedResumeService {
         GeneratedResume generatedResume =
                 generatedResumeRepository.findById(generatedResumeId)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Generated resume not found: "
-                                                + generatedResumeId
-                                )
+                                new GeneratedResumeNotFoundException(generatedResumeId)
                         );
 
         return toResponse(generatedResume);
+    }
+
+    @Override
+    public List<GeneratedResumeResponse> getByResumeId(
+            UUID resumeId) {
+
+        return generatedResumeRepository
+                .findAllByResumeIdOrderByVersionDesc(resumeId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     private GeneratedResumeResponse toResponse(
